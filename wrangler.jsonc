@@ -25,13 +25,13 @@
     {
       "binding": "OAUTH_KV",
       // Replace with the id printed by: wrangler kv namespace create OAUTH_KV
-      "id": "7a0347387a2a488da0f0f74c94fbd157"
+      "id": "567bb19704504b48a0daec089ce57764"
     },
     {
       // Caches immutable past-day API responses. Created via:
       //   wrangler kv namespace create HEALTH_CACHE
       "binding": "HEALTH_CACHE",
-      "id": "f371d2aaf6ef488aa17085cb3c4cf3f9"
+      "id": "3f222329903a47fcbcc6a8ce236eaf60"
     }
   ],
   "vars": {
