@@ -21,6 +21,7 @@ export interface Env {
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
   COOKIE_ENCRYPTION_KEY: string;
+  ALLOWED_EMAIL: string;
   GOOGLE_OAUTH_SCOPES: string;
   /** Public origin of this Worker (for serverInfo icons/websiteUrl). */
   PUBLIC_URL: string;

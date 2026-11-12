@@ -64,6 +64,9 @@ app.get("/icon.png", (c) =>
 // Step 1: Claude hits /authorize. Parse its request, bounce to Google.
 app.get("/authorize", async (c) => {
   const oauthReq = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+  // Only Claude may start a sign-in (blocks look-alike apps).
+  const ALLOWED = ["https://claude.ai/api/mcp/auth_callback", "https://claude.com/api/mcp/auth_callback"];
+  if (!ALLOWED.includes(oauthReq.redirectUri)) return c.text("Client not allowed", 403);
 
   const scopes = `openid email ${c.env.GOOGLE_OAUTH_SCOPES}`.trim();
   const params = new URLSearchParams({
@@ -114,6 +117,8 @@ app.get("/callback", async (c) => {
   });
   const userInfo = (await userRes.json()) as { email?: string; sub?: string };
   const email = userInfo.email ?? userInfo.sub ?? "unknown";
+  // Only the owner's Google account may connect.
+  if (!c.env.ALLOWED_EMAIL || email.toLowerCase() !== c.env.ALLOWED_EMAIL.trim().toLowerCase()) return c.text("Not authorized", 403);
 
   const props: Props = {
     email,
